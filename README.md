@@ -9,7 +9,7 @@
 
 ## Description
 
-WorkoutBuddy is a full-stack application built using `Django/React/Node.js` featuring user authentication and full CRUD. This application is meant to help people keep track of their workouts and achieve their weight-loss goals.
+WorkoutBuddy is a full-stack application built using `Django/React` featuring user authentication and full CRUD. This application is meant to help people keep track of their workouts and achieve their weight-loss goals.
 
 ## Features
 
@@ -27,13 +27,12 @@ WorkoutBuddy is a full-stack application built using `Django/React/Node.js` feat
 #### Frontend
 
 - Javascript, HTML, & CSS
-- React, a JavaScript library for building user interfaces
-- Axios, a promise-based HTTP client for the browser and Node.js
+- React
+- Axios
 
 #### Backend
 
-- Node.js, a JavaScript runtime for building server-side applications
-- Django and DjangoRestFramework, a web application framework for Node.js
-- PostgresSQL, an open-source relational database management system
+- Django and DjangoRestFramework
+- PostgresSQL
 - JSON Web Tokens (JWT)
 
