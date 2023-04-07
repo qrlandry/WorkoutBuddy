@@ -14,6 +14,7 @@ WorkoutBuddy is a full-stack application built using `Django/React` featuring us
 ## Features
 
 - Users can create an account and log in with their credentials
+- Users can update their account information and weight
 - Users can add or delete their exercises
 - Users can log and view their workouts
 - Users can see their weight loss or weight gain displayed on a graph
