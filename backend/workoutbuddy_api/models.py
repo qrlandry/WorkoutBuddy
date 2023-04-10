@@ -78,3 +78,32 @@ class Exercise(models.Model):
     def __str__(self):
         return self.name
     
+class Workout(models.Model):
+    STATUS_CHOICES = [
+        ('Started', 'Started'),
+        ('Finished', 'Finished'),
+        ('Template', 'Template'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+
+    def __str__(self):
+        return f"Workout(user={self.user.name}"
+    
+class WorkoutExercise(models.Model):
+    workout = models.ForeignKey(Workout, related_name="workout_exercises", on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"(workout={self.workout.user.username}, exercise={self.exercise.name})"
+    
+class WorkoutExerciseDetail(models.Model):
+    workout_exercise = models.ForeignKey(WorkoutExercise, related_name="workout_exercise_details",
+    on_delete=models.CASCADE)
+    sets = models.PositiveIntegerField()
+    reps = models.PositiveIntegerField()
+    weight = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"WorkoutExerciseDetail(workout_exercise={self.workout_exercise.exercise.name}, " \
+               f"sets={self.sets}, reps={self.reps}, weight={self.weight})"

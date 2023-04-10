@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .serializers import UserSerializer, ExerciseSerializer
+from .serializers import UserSerializer, ExerciseSerializer, WorkoutSerializer, WorkoutExerciseSerializer, WorkoutExerciseDetailSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User, Exercise
+from .models import User, Exercise, Workout, WorkoutExercise, WorkoutExerciseDetail
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 import datetime
@@ -90,3 +90,27 @@ class ExerciseListView(generics.ListCreateAPIView):
 class ExerciseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
+
+class WorkoutListCreateView(generics.ListCreateAPIView):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+
+class WorkoutRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+
+class WorkoutExerciseListCreateView(generics.ListCreateAPIView):
+    queryset = WorkoutExercise.objects.all()
+    serializer_class = WorkoutExerciseSerializer
+
+class WorkoutExerciseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WorkoutExercise.objects.all()
+    serializer_class = WorkoutExerciseSerializer
+
+class WorkoutExerciseDetailListCreateView(generics.ListCreateAPIView):
+    queryset = WorkoutExerciseDetail.objects.all()
+    serializer_class = WorkoutExerciseDetailSerializer
+
+class WorkoutExerciseDetailDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WorkoutExerciseDetail.objects.all()
+    serializer_class = WorkoutExerciseDetailSerializer
