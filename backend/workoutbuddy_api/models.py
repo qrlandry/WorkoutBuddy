@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.functional import classproperty
 
 class UserManager(BaseUserManager):
     def create_user(self, email, name, password=None, **extra_fields):
@@ -37,3 +38,42 @@ class User(AbstractUser):
         blank=True,
         related_name='workoutbuddy_user_permissions'
     )
+
+class Exercise(models.Model):
+    TARGET_LOCATION = (
+        ('Arms', 'Arms'),
+        ('Shoulers', 'Shoulders'),
+        ('Chest', 'Chest'),
+        ('Core', 'Core'),
+        ('Legs', 'Legs'),
+    )
+
+    EQUIPMENT = (
+        ('Barbell', 'Barbell'),
+        ('Dumbell', 'Dumbell'),
+        ('Machine', 'Machine'),
+        ('Bodyweight', 'Bodyweight'),
+        ('Cardio', 'Cardio'),
+        ('Other', 'Other'),
+    )
+
+    body_part = models.CharField(max_length=150, choices=TARGET_LOCATION)
+    equipment = models.CharField(max_length=150, choices=EQUIPMENT)
+    name = models.CharField(max_length=150)
+    description = models.TextField(max_length=250, blank=True, null=True)
+    user = models.ForeignKey(User, related_name="exercises", on_delete=models.CASCADE, blank=True, null=True)
+
+    @classproperty
+    def body_part_list(self):
+        return [item[0] for item in self.TARGET_LOCATION]
+
+    @classproperty
+    def equipment_list(self):
+        return [item[0] for item in self.EQUIPMENT]
+
+    class Meta:
+        unique_together = ('body_part', 'equipment', 'name')
+
+    def __str__(self):
+        return (self.body_part, self.equipment, self.name, self.description)
+    
