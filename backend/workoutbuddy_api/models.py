@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.functional import classproperty
 
 class UserManager(BaseUserManager):
     def create_user(self, email, name, password=None, **extra_fields):
@@ -46,6 +45,8 @@ class Exercise(models.Model):
         ('Chest', 'Chest'),
         ('Core', 'Core'),
         ('Legs', 'Legs'),
+        ('Back', 'Back'),
+        ('Full body', 'Full Body')
     )
 
     EQUIPMENT = (
@@ -63,11 +64,11 @@ class Exercise(models.Model):
     description = models.TextField(max_length=250, blank=True, null=True)
     user = models.ForeignKey(User, related_name="exercises", on_delete=models.CASCADE, blank=True, null=True)
 
-    @classproperty
+    @classmethod
     def body_part_list(self):
         return [item[0] for item in self.TARGET_LOCATION]
 
-    @classproperty
+    @classmethod
     def equipment_list(self):
         return [item[0] for item in self.EQUIPMENT]
 
@@ -75,5 +76,5 @@ class Exercise(models.Model):
         unique_together = ('body_part', 'equipment', 'name')
 
     def __str__(self):
-        return (self.body_part, self.equipment, self.name, self.description)
+        return self.name
     

@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ExerciseSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User
+from .models import User, Exercise
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 import datetime
 from rest_framework.permissions import AllowAny
-
+from rest_framework import generics
 
 class RegisterView(APIView):
     permission_classes=[AllowAny]
@@ -81,3 +81,12 @@ class LogoutView(APIView):
 
     def post(self, request):
         return Response({'message': 'success'}, status=200)
+    
+class ExerciseListView(generics.ListCreateAPIView):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+
+
+class ExerciseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer

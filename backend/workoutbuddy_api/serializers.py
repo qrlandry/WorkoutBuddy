@@ -19,11 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
     
 class ExerciseSerializer(serializers.ModelSerializer):
+    body_part_display = serializers.CharField(source='get_body_part_display', read_only=True)
+    equipment_display = serializers.CharField(source='get_equipment_display', read_only=True)
+
     class Meta:
         model = Exercise
-        fields = '__all__'
-
-    def create(self, validated_data):
-        request_user = self.context['request'].user
-        instance = Exercise.objects.create(user=request_user, **validated_data)
-        return instance
+        fields = ('id', 'body_part', 'body_part_display', 'equipment', 'equipment_display', 'name', 'description', 'user')
+        read_only_fields = ('id', 'body_part_display', 'equipment_display')
