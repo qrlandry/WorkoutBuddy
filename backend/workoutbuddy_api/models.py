@@ -21,7 +21,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
     username = None
-    weight = models.IntegerField()
+    weight = models.IntegerField(null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
