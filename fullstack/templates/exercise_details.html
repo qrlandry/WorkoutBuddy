@@ -1,6 +1,8 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<a href="{% url 'update_exercise' exercise.id %}"> Edit </a>
+<a href="{%  %}"> Delete </a>
 <h1> {{exercise.name}} </h1>
 <h3> Target Area: {{exercise.body_part}} </h3>
 <h3> Equipment: {{exercise.equipment}} </h3>

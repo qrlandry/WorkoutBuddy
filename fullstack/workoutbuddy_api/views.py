@@ -145,6 +145,12 @@ def update_exercise(request, pk):
     exercise = Exercise.objects.get(id=pk)
     form = ExerciseForm(instance=exercise)
 
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST, instance=exercise)
+        if form.is_valid():
+            form.save()
+            return redirect('exercise')
+
     context = {'form': form}
     return render(request, 'create_exercise.html', context)
 
