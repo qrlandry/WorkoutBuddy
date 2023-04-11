@@ -154,6 +154,13 @@ def update_exercise(request, pk):
     context = {'form': form}
     return render(request, 'create_exercise.html', context)
 
+def delete_exercise(request, pk):
+    exercise = Exercise.objects.get(id=pk)
+    if request.method == 'POST':
+        exercise.delete()
+        return redirect('exercise')
+    return render(request, 'delete.html', {'obj': exercise})
+
 def profile(request):
     return render(request, 'profile.html')
 
