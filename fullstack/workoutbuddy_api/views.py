@@ -114,3 +114,31 @@ class WorkoutExerciseDetailListCreateView(generics.ListCreateAPIView):
 class WorkoutExerciseDetailDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = WorkoutExerciseDetail.objects.all()
     serializer_class = WorkoutExerciseDetailSerializer
+
+def home(request):
+    return render(request, 'home.html')
+
+def exercise(request):
+    exercises = Exercise.objects.all()
+    context = { 'exercises': exercises }
+    return render(request, 'exercise.html', context)
+
+def exercise_details(request, pk):
+    exercise = Exercise.objects.get(id=pk)
+    context = {'exercise': exercise}
+    return render(request, 'exercise_details.html', context)
+
+def profile(request):
+    return render(request, 'profile.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def register(request):
+    return render(request, 'register.html')
+
+def sessions(request):
+    return render(request, 'sessions.html')
+
+def log(request):
+    return render(request, 'log.html')

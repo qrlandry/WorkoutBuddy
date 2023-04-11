@@ -19,4 +19,12 @@ urlpatterns = [
     path('workout_exercise_details', views.WorkoutExerciseDetailListCreateView.as_view(), name='workout_detail'),
     path('workout_exercise_details/details/<int:pk>',
          views.WorkoutExerciseDetailDetailView.as_view(), name='workout_detail_detail'),
+    path('', views.home, name='home'),
+    path('exercises/', views.exercise, name='exercise'),
+    path('exercises_details/<str:pk>/', views.exercise_details, name='exercise_details'),
+    path('login/', views.exercise, name='login'),
+    path('register/', views.exercise, name='register'),
+    path('sessions/', views.exercise, name='sessions'),
+    path('log/', views.exercise, name='log'),
+    path('profile/', views.exercise, name='profile'),
 ]
