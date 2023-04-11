@@ -3,6 +3,7 @@ import { UserContext } from "./UserContext.jsx";
 import Home from "./Components/Home";
 import Login from "./Components/Login.jsx";
 import Register from "./Components/Register.jsx";
+import Profile from './Components/Profile';
 import { Routes, Route } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { CheckSession } from "./Services/auth";
@@ -45,6 +46,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         </UserContext.Provider>

@@ -1,3 +1,3 @@
 export default function Login() {
-    pass
+    return null
 }
