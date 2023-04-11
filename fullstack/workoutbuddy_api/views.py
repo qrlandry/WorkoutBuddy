@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .serializers import UserSerializer, ExerciseSerializer, WorkoutSerializer, WorkoutExerciseSerializer, WorkoutExerciseDetailSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,6 +8,7 @@ import jwt
 import datetime
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
+from .forms import ExerciseForm
 
 class RegisterView(APIView):
     permission_classes=[AllowAny]
@@ -127,6 +128,25 @@ def exercise_details(request, pk):
     exercise = Exercise.objects.get(id=pk)
     context = {'exercise': exercise}
     return render(request, 'exercise_details.html', context)
+
+def create_exercise(request):
+    form = ExerciseForm()
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+            print(form.save())
+            return redirect('exercise')
+    context = {'form': form}
+    return render(request, 'create_exercise.html', context)
+
+def update_exercise(request, pk):
+    exercise = Exercise.objects.get(id=pk)
+    form = ExerciseForm(instance=exercise)
+
+    context = {'form': form}
+    return render(request, 'create_exercise.html', context)
 
 def profile(request):
     return render(request, 'profile.html')
