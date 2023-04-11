@@ -1,17 +1,58 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1> Exercise Template </h1>
+<h1> Exercises </h1>
 
-<div> 
+<div class="exercise-container"> 
     <div>
+
+        <form method="GET" action="{% url 'exercise' %}">
+            <input type="text" name="q" placeholder="Search Exercises" />
+        </form>
+
+        <div>
+            <form method="GET" action="{% url 'exercise' %}">
+                <label for="body_part">Filter by Body Part:</label>
+                <select id="body_part" name="body_part">
+                  <option value="">All</option>
+                  <option value="Arms">Arms</option>
+                  <option value="Legs">Legs</option>
+                  <option value="Abs">Core</option>
+                  <option value="Back">Back</option>
+                  <option value="Chest">Chest</option>
+                  <option value="Shoulders">Shoulders</option>
+                </select>
+                <input type="submit" value="Filter">
+              </form>
+        </div>
+
+        <div>
+            <form method="GET" action="{% url 'exercise' %}">
+                <label for="equipment">Filter by Equipment:</label>
+                <select id="equipment" name="equipment">
+                  <option value="">All</option>
+                  <option value="Barbell">Barbell</option>
+                  <option value="Dumbell">Dumbell</option>
+                  <option value="Machine">Machine</option>
+                  <option value="Bodyweight">Bodyweight</option>
+                  <option value="Cardio">Cardio</option>
+                  <option value="Other">Other</option>
+                </select>
+                <input type="submit" value="Filter">
+              </form>
+        </div>
+
         <form action="/create_exercise">
             <input type="submit" value="Add Exercise">
         </form>
+
         {% for exercise in exercises %}
 
             <div>
-                <h5> <a href="/exercises_details/{{exercise.id}}">{{exercise.name}}</a> </h5>
+                <h2> <a href="/exercises_details/{{exercise.id}}">{{exercise.name}}</a> </h2>
+                <p> Target Area: {{exercise.body_part}} </p>
+                <p> Equipment: {{exercise.equipment}} </p>
+                <hr>
             </div>
 
         {% endfor %}

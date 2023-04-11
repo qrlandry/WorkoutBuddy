@@ -120,7 +120,23 @@ def home(request):
     return render(request, 'home.html')
 
 def exercise(request):
+    
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    body_part = request.GET.get('body_part') if request.GET.get('body_part') != None else ''
+    equipment = request.GET.get('equipment') if request.GET.get('equipment') != None else ''
+
+
     exercises = Exercise.objects.all()
+
+    if q:
+        exercises = exercises.filter(name__icontains=q)
+
+    if body_part:
+        exercises = exercises.filter(body_part=body_part)
+    
+    if equipment:
+        exercises = exercises.filter(equipment=equipment)
+
     context = { 'exercises': exercises }
     return render(request, 'exercise.html', context)
 
