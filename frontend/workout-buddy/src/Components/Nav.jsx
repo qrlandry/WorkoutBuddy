@@ -6,7 +6,6 @@ import { LogoutUser } from "../Services/auth";
 
 export default function Nav() {
   const navigate = useNavigate();
-  const [onSignInPage, setOnSignInPage] = useState(false);
   const { loggedIn, setLoggedIn } = useContext(UserContext);
 
   const handleSignout = async (e) => {
@@ -17,17 +16,10 @@ export default function Nav() {
     navigate("/");
   };
 
-  return(
+  return (
     <div className="nav-container">
       <div className="nav-links">
-        <div className="top-right">
-          {loggedIn ? (
-            <div className="cart">
-              <NavLink to="/cart" className="menu-item">
-                Cart
-              </NavLink>
-            </div>
-          ) : null}
+        <div className="top-right">       
           {loggedIn ? (
             <div className="profile" style={{ marginRight: "1vw" }}>
               <NavLink to="/profile" className="menu-item">

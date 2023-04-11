@@ -1,3 +1,5 @@
 export default function Register() {
-    return null
+    return (
+        <h1> I am register </h1>
+    )
 }

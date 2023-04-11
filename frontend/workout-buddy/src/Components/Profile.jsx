@@ -1,3 +1,5 @@
 export default function Profile() {
-    return null
+    return(
+        <h1> I am Profile </h1>
+    )
 }
