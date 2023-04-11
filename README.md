@@ -36,4 +36,3 @@ WorkoutBuddy is a full-stack application built using `Django/React` featuring us
 - Django and DjangoRestFramework
 - PostgresSQL
 - JSON Web Tokens (JWT)
-
