@@ -1,6 +1,7 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} 
 
 {% block content %}
-<h1> Profile Template </h1>
-
+<h1> Username: {{ user.username }} </h1>
+<h2> Email: {{ user.email }}</h2>
+<a href="{% url 'edit_user_profile' %}">Edit Profile</a>
 {% endblock content %}

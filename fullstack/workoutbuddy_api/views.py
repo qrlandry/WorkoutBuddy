@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
-from .forms import ExerciseForm
+from .forms import ExerciseForm, UserUpdateForm
 
 # login the user
 def login_page(request):
@@ -131,19 +131,30 @@ def delete_exercise(request, pk):
     return render(request, 'delete.html', {'obj': exercise})
 
 @login_required(login_url='login/')
+def edit_profile(request):
+    user = request.user
+    form = UserUpdateForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user_profile')
+
+    return render(request, 'edit_profile.html', {'form': form })
+
+@login_required(login_url='login/')
 def profile(request):
     return render(request, 'profile.html')
-
-def register(request):
-    return render(request, 'register.html')
 
 @login_required(login_url='login/')
 def sessions(request):
     return render(request, 'sessions.html')
 
-@login_required(login_url='login/')
-def log_start(request):
-    if request.method == 'GET':
-        workout = Workout.objects.create(user=request.user, status='Started')
-        workout_id = workout.id
-    return redirect(request, 'log.html', pk=workout_id)
+# log my workouts
+# @login_required(login_url='login/')
+# def log_start(request):
+#     if request.method == 'GET':
+#         workout = Workout.objects.create(user=request.user, status='Started')
+#         workout_id = workout.id
+#     return redirect('log_details.html', pk=workout_id)

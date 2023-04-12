@@ -13,7 +13,8 @@ urlpatterns = [
     path('login/', views.login_page, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('register/', views.register_user, name='register'),
-    path('sessions/', views.exercise, name='sessions'),
-    path('log/', views.log_start, name='log'),
-    path('profile/', views.exercise, name='profile'),
+    path('sessions/', views.sessions, name='sessions'),
+    # path('log/', views.log_start, name='log'),
+    path('edit_profile/', views.edit_profile, name='edit_user_profile'),
+    path('profile/', views.profile, name='user_profile'),
 ]
