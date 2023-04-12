@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Exercise(models.Model):
     TARGET_LOCATION = (
         ('Arms', 'Arms'),
-        ('Shoulers', 'Shoulders'),
+        ('Shoulders', 'Shoulders'),
         ('Chest', 'Chest'),
         ('Core', 'Core'),
         ('Legs', 'Legs'),
