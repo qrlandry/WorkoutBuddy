@@ -1,10 +1,17 @@
 <a href="/">
-    <h1> LOGO </h1>
-    <h4><a href="/exercises/"> Exercises </a> </h4>
-    <h4><a href="/profile/"> Profile </a> </h4>
-    <h4><a href="/login/"> Login </a> </h4>
-    <h4><a href="/log/"> Log </a> </h4>
-    <h4><a href="/sessions/"> Sessions </a> </h4>
+    <h1> WorkoutBuddy </h1>
 </a>
+
+    {% if request.user.is_authenticated %}
+    <p> Hello {{request.user}} </p>
+    <a href="{% url 'logout' %}"> Logout </a>
+    <a href="/exercises/"> Exercises </a> 
+    <a href="/profile/"> Profile </a>
+    <a href="/log/"> Log </a>
+    <a href="/sessions/"> Sessions </a>
+    {% else %}
+    <a href="{% url 'login' %}"> Login </a>
+    {% endif %}
+    
 
 <hr>

@@ -4,4 +4,4 @@ from .models import Exercise
 class ExerciseForm(ModelForm):
     class Meta:
         model = Exercise
-        fields = ('__all__')
+        fields = ('name', 'body_part', 'equipment', 'description')
