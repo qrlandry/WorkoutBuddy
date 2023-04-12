@@ -134,9 +134,6 @@ def delete_exercise(request, pk):
 def profile(request):
     return render(request, 'profile.html')
 
-def login(request):
-    return render(request, 'login.html')
-
 def register(request):
     return render(request, 'register.html')
 
@@ -145,5 +142,8 @@ def sessions(request):
     return render(request, 'sessions.html')
 
 @login_required(login_url='login/')
-def log(request):
-    return render(request, 'log.html')
+def log_start(request):
+    if request.method == 'GET':
+        workout = Workout.objects.create(user=request.user, status='Started')
+        workout_id = workout.id
+    return redirect(request, 'log.html', pk=workout_id)
