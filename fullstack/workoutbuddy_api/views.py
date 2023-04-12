@@ -130,6 +130,7 @@ def delete_exercise(request, pk):
         return redirect('exercise')
     return render(request, 'delete.html', {'obj': exercise})
 
+# edit user profile
 @login_required(login_url='login/')
 def edit_profile(request):
     user = request.user

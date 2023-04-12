@@ -9,7 +9,7 @@
 
 ## Description
 
-WorkoutBuddy is a full-stack application built using `Django/React` featuring user authentication and full CRUD. This application is meant to help people keep track of their workouts and achieve their weight-loss goals.
+WorkoutBuddy is a full-stack application built using `Django` featuring user authentication and full CRUD. This application is meant to help people keep track of their workouts and achieve their weight-loss goals.
 
 ## Features
 
@@ -27,12 +27,10 @@ WorkoutBuddy is a full-stack application built using `Django/React` featuring us
 
 #### Frontend
 
-- Javascript, HTML, & CSS
-- React
-- Axios
+- Django/HTML/CSS
 
 #### Backend
 
 - Django and DjangoRestFramework
 - PostgresSQL
-- JSON Web Tokens (JWT)
+- Cookies
