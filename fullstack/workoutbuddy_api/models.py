@@ -14,7 +14,7 @@ class Exercise(models.Model):
 
     EQUIPMENT = (
         ('Barbell', 'Barbell'),
-        ('Dumbell', 'Dumbell'),
+        ('Dumbbell', 'Dumbbell'),
         ('Machine', 'Machine'),
         ('Bodyweight', 'Bodyweight'),
         ('Cardio', 'Cardio'),
@@ -25,7 +25,9 @@ class Exercise(models.Model):
     equipment = models.CharField(max_length=150, choices=EQUIPMENT)
     name = models.CharField(max_length=150)
     description = models.TextField(max_length=250, blank=True, null=True)
+    photo_url = models.CharField(max_length=500, default='a string')
     user = models.ForeignKey(User, related_name="exercises", on_delete=models.CASCADE, blank=True, null=True)
+    
 
     @classmethod
     def body_part_list(self):
