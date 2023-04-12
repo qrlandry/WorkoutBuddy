@@ -53,7 +53,7 @@ class Workout(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
 
     def __str__(self):
-        return f"Workout(user={self.user.name} status={self.status})"
+        return f"Workout(user={self.user.username} status={self.status})"
     
 class WorkoutExercise(models.Model):
     workout = models.ForeignKey(Workout, related_name="workout_exercises", on_delete=models.CASCADE)

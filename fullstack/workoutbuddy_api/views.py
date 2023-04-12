@@ -152,10 +152,49 @@ def profile(request):
 def sessions(request):
     return render(request, 'sessions.html')
 
+@login_required(login_url='login/')
+def add_exercise(request, workout_id):
+    workout = Workout.objects.get(id=workout_id)
+    exercises = Exercise.objects.all()
+
+    if request.method == 'POST':
+        exercise_id = request.POST.get('exercise')
+        exercise = Exercise.objects.get(id=exercise_id)
+
+        workout_exercise = WorkoutExercise.objects.create(workout=workout, exercise=exercise)
+
+        sets = request.POST.get('sets')
+        reps = request.POST.get('reps')
+        weight = request.POST.get('weight')
+
+        workout_exercise_detail = WorkoutExerciseDetail.objects.create(
+            workout_exercise=workout_exercise,
+            sets=sets,
+            reps=reps,
+            weight=weight
+        )
+
+        return redirect('add_workout', workout_id=workout_id)
+
+    context = {
+        'workout': workout,
+        'exercises': exercises,
+    }
+    return render(request, 'add_workout_exercise.html', context)
+
 # log my workouts
-# @login_required(login_url='login/')
-# def log_start(request):
-#     if request.method == 'GET':
-#         workout = Workout.objects.create(user=request.user, status='Started')
-#         workout_id = workout.id
-#     return redirect('log_details.html', pk=workout_id)
+@login_required(login_url='login/')
+def log_start(request):
+    workout = Workout.objects.create(user=request.user)
+    return redirect('add_workout', workout_id=workout.id)
+
+def log_end(request, workout_id):
+    workout = Workout.objects.get(id=workout_id)
+    if request.method == 'POST':
+        workout.status = 'finished' # set the status to finished
+        workout.save() # save the changes to the database
+        return redirect('sessions')
+    context = {
+        'workout': workout,
+    }
+    return render(request, 'log_end.html', context)
