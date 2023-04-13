@@ -240,3 +240,10 @@ def log_end(request, workout_id):
     }
     return render(request, 'log_end.html', context)
 
+@login_required(login_url='login/')
+def delete_workout(request, pk):
+    workout = Workout.objects.get(id=pk)
+    if request.method == "POST":
+        workout.delete()
+        return redirect('sessions')
+

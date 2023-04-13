@@ -2,6 +2,10 @@
 
 {% block content %}
   <h1>{{ workout }}</h1>
+  <form action="{% url 'delete_workout' pk=workout.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
   <h2>Exercises</h2>
   {% if workout_exercises %}
     <ul>
