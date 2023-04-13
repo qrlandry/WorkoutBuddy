@@ -29,24 +29,27 @@
 
   <form method="POST" action="{% url 'log_end' workout_id=workout.id %}">
     {% csrf_token %}
+    <input type="hidden" name="completion_date" value="{{ date.today }}">
     <button type="submit">End Workout</button>
   </form>
 
   <h2>Exercises In Workout</h2>
 
-  {% if workout.workoutexercise_set.all %}
+  {% if workout_exercises %}
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      {% for exercise in workout.workoutexercise_set.all %}
+      {% for exercise in workout_exercises %}
         <div class="col">
           <div class="card h-100">
             <div class="card-body">
               <h5 class="card-title">{{ exercise.exercise.name }}</h5>
-              <p class="card-text">Sets: {{ exercise.workoutexercisedetail.sets }}</p>
-              <p class="card-text">Reps: {{ exercise.workoutexercisedetail.reps }}</p>
-              <p class="card-text">Weight: {{ exercise.workoutexercisedetail.weight }}</p>
+              {% for detail in exercise.workout_exercise_details.all %}
+              <p class="card-text">Sets: {{ detail.sets }}</p>
+              <p class="card-text">Reps: {{ detail.reps }}</p>
+              <p class="card-text">Weight: {{ detail.weight }}</p>
+              {% endfor %}
             </div>
           </div>
-        </div>
+        </div>    
       {% endfor %}
     </div>
   {% else %}

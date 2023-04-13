@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h1>{{ workout }}</h1>
+  <h2>Exercises</h2>
+  {% if workout_exercises %}
+    <ul>
+      {% for exercise in workout_exercises %}
+        <li>
+          <a href="{% url 'workout_exercise_details' pk=exercise.id %}" >{{ exercise.exercise }} </a>
+          <ul>
+            {% for detail in exercise.workout_exercise_details.all %}
+              <li>
+                {{ detail.sets }} sets of {{ detail.reps }} reps at {{ detail.weight }} lbs
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No exercises found for this workout.</p>
+  {% endif %}
+{% endblock %}

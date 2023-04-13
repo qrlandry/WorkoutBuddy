@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Exercise(models.Model):
     TARGET_LOCATION = (
@@ -51,9 +52,10 @@ class Workout(models.Model):
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    date_completed = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"Workout(user={self.user.username} status={self.status})"
+        return f"Workout(status={self.status} date={self.date_completed})"
     
 class WorkoutExercise(models.Model):
     workout = models.ForeignKey(Workout, related_name="workout_exercises", on_delete=models.CASCADE)

@@ -1,6 +1,16 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1> Sessions Template </h1>
-
-{% endblock content %}
+  <h1>My Workouts</h1>
+  {% if workouts %}
+    <ul>
+      {% for workout in workouts %}
+        <li>
+          <a href="{% url 'workout_details' workout.id %}">{{ workout }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No workouts found.</p>
+  {% endif %}
+{% endblock %}

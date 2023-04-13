@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ExerciseForm, UserUpdateForm
+from django.utils import timezone
 
 # login the user
 def login_page(request):
@@ -91,6 +92,14 @@ def exercise_details(request, pk):
     context = {'exercise': exercise}
     return render(request, 'exercise_details.html', context)
 
+# view exercise details page from workout sessions
+@login_required(login_url='login/')
+def workout_exercise_details(request, pk):
+    workout_exercise = WorkoutExercise.objects.get(id=pk)
+    exercise = workout_exercise.exercise
+    context = {'exercise': exercise}
+    return render(request, 'exercise_details.html', context)
+
 # exercise create method
 @login_required(login_url='login/')
 def create_exercise(request):
@@ -144,18 +153,40 @@ def edit_profile(request):
 
     return render(request, 'edit_profile.html', {'form': form })
 
+# render the profile
 @login_required(login_url='login/')
 def profile(request):
     return render(request, 'profile.html')
 
+# render past logged workouts
 @login_required(login_url='login/')
 def sessions(request):
-    return render(request, 'sessions.html')
+    workouts = Workout.objects.filter(user=request.user)
+    context = {
+        'workouts': workouts,
+    }
+    return render(request, 'sessions.html', context)
 
+# view logged workout details
+@login_required(login_url='login/')
+def workout_details(request, workout_id):
+    workout = Workout.objects.get(id=workout_id)
+    workout_exercises = WorkoutExercise.objects.filter(workout=workout)
+    workout_exercises_details = WorkoutExerciseDetail.objects.filter(workout_exercise__in=workout_exercises)
+    context = {
+        'workout': workout,
+        'workout_exercises': workout_exercises,
+        'workout_exercises_details': workout_exercises_details
+    }
+    return render(request, 'workout_details.html', context)
+
+# add exercise to your workout 
 @login_required(login_url='login/')
 def add_exercise(request, workout_id):
     workout = Workout.objects.get(id=workout_id)
     exercises = Exercise.objects.all()
+    workout_exercises = WorkoutExercise.objects.filter(workout=workout)
+    workout_exercises_details = WorkoutExerciseDetail.objects.filter(workout_exercise__in=workout_exercises)
 
     if request.method == 'POST':
         exercise_id = request.POST.get('exercise')
@@ -179,8 +210,15 @@ def add_exercise(request, workout_id):
     context = {
         'workout': workout,
         'exercises': exercises,
+        'workout_exercises': workout_exercises,
+        'workout_exercises_details': workout_exercises_details,
     }
     return render(request, 'add_workout_exercise.html', context)
+
+# render the logger 
+@login_required(login_url='login/')
+def log(request):
+    return render(request,'log.html')
 
 # log my workouts
 @login_required(login_url='login/')
@@ -188,13 +226,17 @@ def log_start(request):
     workout = Workout.objects.create(user=request.user)
     return redirect('add_workout', workout_id=workout.id)
 
+# finish the workout and redirect to the sessions page
+@login_required(login_url='login/')
 def log_end(request, workout_id):
     workout = Workout.objects.get(id=workout_id)
     if request.method == 'POST':
-        workout.status = 'finished' # set the status to finished
-        workout.save() # save the changes to the database
+        workout.status = 'finished' 
+        workout.date_completed = timezone.now()
+        workout.save() 
         return redirect('sessions')
     context = {
         'workout': workout,
     }
     return render(request, 'log_end.html', context)
+
