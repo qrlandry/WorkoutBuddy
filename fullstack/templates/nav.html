@@ -1,61 +1,56 @@
 {% load static %}
-
-<link
+<head>
+  <link
     rel="stylesheet"
     type="text/css"
     href="{% static 'home/css/bootstrap.css' %}"
-/>
+  />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+</head>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">WorkoutBuddy</a>
+  <a class="navbar-brand" href="/"> WorkoutBuddy </a>
   <button
     class="navbar-toggler"
     type="button"
     data-toggle="collapse"
-    data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown"
+    data-target="#navbarText"
+    aria-controls="navbarText"
     aria-expanded="false"
     aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
   {% if request.user.is_authenticated %}
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/exercises/"
-          >Exercises <span class="sr-only"></span></a
-        >
+        <a class="nav-link" href="/exercises/"> Exercises </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/log/">Log</a>
+        <a class="nav-link" href="/log/"> Log </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        <a class="nav-link" href="/profile/"> Profile </a>
       </li>
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdownMenuLink"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Profile
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/profile/">View Profile</a>
-          <a class="dropdown-item" href="/sessions/"> Sessions </a>
-          {% else %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'login' %}"
-              >Login <span class="sr-only"></span></a
-            >
-          </li>
-          {% endif %}
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="/sessions/"> Sessions </a>
       </li>
     </ul>
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ms-auto">
+        <a class="nav-link" href="{% url 'logout' %}"> Logout </a>
+      </li>
+    </ul>
+
+    {% else %}
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}"> Login </a>
+      </li>
+    </ul>
+    {% endif %}
   </div>
 </nav>
