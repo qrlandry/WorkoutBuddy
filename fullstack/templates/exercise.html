@@ -1,62 +1,89 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block content %}
 
-{% block content %}
-<h1> Exercises </h1>
+<div class="exercise-container">
+  <div class="text-center">
+    <h1>Exercises</h1>
 
-<div class="exercise-container"> 
+    <form method="GET" action="{% url 'exercise' %}">
+      <input type="text" name="q" placeholder="Search Exercises" />
+    </form>
+
     <div>
+      <form class="form-inline" method="GET" action="{% url 'exercise' %}">
+        <label class="my-1 mr-2" for="body_part">Filter by Body Part:</label>
+        <select
+          class="custom-select my-1 mr-sm-2"
+          id="body_part"
+          name="body_part"
+        >
+          <option selected>Choose...</option>
+          <option value="">All</option>
+          <option value="Arms">Arms</option>
+          <option value="Legs">Legs</option>
+          <option value="Core">Core</option>
+          <option value="Back">Back</option>
+          <option value="Chest">Chest</option>
+          <option value="Shoulders">Shoulders</option>
+        </select>
 
-        <form method="GET" action="{% url 'exercise' %}">
-            <input type="text" name="q" placeholder="Search Exercises" />
-        </form>
-
-        <div>
-            <form method="GET" action="{% url 'exercise' %}">
-                <label for="body_part">Filter by Body Part:</label>
-                <select id="body_part" name="body_part">
-                  <option value="">All</option>
-                  <option value="Arms">Arms</option>
-                  <option value="Legs">Legs</option>
-                  <option value="Core">Core</option>
-                  <option value="Back">Back</option>
-                  <option value="Chest">Chest</option>
-                  <option value="Shoulders">Shoulders</option>
-                </select>
-                <input type="submit" value="Filter">
-              </form>
-        </div>
-
-        <div>
-            <form method="GET" action="{% url 'exercise' %}">
-                <label for="equipment">Filter by Equipment:</label>
-                <select id="equipment" name="equipment">
-                  <option value="">All</option>
-                  <option value="Barbell">Barbell</option>
-                  <option value="Dumbbell">Dumbbell</option>
-                  <option value="Machine">Machine</option>
-                  <option value="Bodyweight">Bodyweight</option>
-                  <option value="Cardio">Cardio</option>
-                  <option value="Other">Other</option>
-                </select>
-                <input type="submit" value="Filter">
-              </form>
-        </div>
-
-        <form action="/create_exercise">
-            <input type="submit" value="Add Exercise">
-        </form>
-
-        {% for exercise in exercises %}
-
-            <div>
-                <h2> <a href="/exercises_details/{{exercise.id}}">{{exercise.name}}</a> </h2>
-                <p> Target Area: {{exercise.body_part}} </p>
-                <p> Equipment: {{exercise.equipment}} </p>
-                <hr>
-            </div>
-
-        {% endfor %}
+        <button type="submit" class="btn btn-primary my-1">Filter</button>
+      </form>
     </div>
-</div>
 
+    <div>
+      <form class="form-inline">
+        <label class="my-1 mr-2" for="equipment">Filter by Equipment:</label>
+        <select
+          class="custom-select my-1 mr-sm-2"
+          id="equipment"
+          name="equipment"
+        >
+          <option selected>Choose...</option>
+          <option value="">All</option>
+          <option value="Barbell">Barbell</option>
+          <option value="Dumbbell">Dumbbell</option>
+          <option value="Machine">Machine</option>
+          <option value="Bodyweight">Bodyweight</option>
+          <option value="Cardio">Cardio</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary my-1">Filter</button>
+      </form>
+    </div>
+
+    <form action="/create_exercise">
+      <button type="submit" class="btn btn-primary my-1">Add Exercise</button>
+    </form>
+
+    <div class="row">
+      {% for exercise in exercises %}
+      <div class="col-sm-4 mb-4">
+        <div class="card text-center">
+          <img
+            class="card-img-top"
+            src="{{exercise.photo_url}}"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{exercise.name}}</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Target Area: {{exercise.body_part}}
+              </li>
+              <li class="list-group-item">Equipment: {{exercise.equipment}}</li>
+            </ul>
+            <a
+              href="/exercises_details/{{exercise.id}}"
+              class="btn btn-primary"
+            >
+              {{exercise.name}}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% endblock content %}
