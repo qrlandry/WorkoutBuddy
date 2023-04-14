@@ -3,6 +3,7 @@
   <h1>{{workout.name}}</h1>
   <form action="{% url 'delete_workout' pk=workout.id %}" method="POST">
     {% csrf_token %}
+    <a href="/sessions/" class="btn btn-secondary">Back</a>
     <button type="submit" class="btn btn-danger">Delete</button>
   </form>
   <h2>Exercises</h2>

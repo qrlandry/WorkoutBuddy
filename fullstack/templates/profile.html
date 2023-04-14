@@ -1,7 +1,9 @@
 {% extends 'main.html' %} 
 
 {% block content %}
+<div class="text-center">
 <h1> Username: {{ user.username }} </h1>
 <h2> Email: {{ user.email }}</h2>
-<a href="{% url 'edit_user_profile' %}">Edit Profile</a>
+<a href="{% url 'edit_user_profile' %}" class="btn btn-primary">Edit Profile</a>
+</div>
 {% endblock content %}

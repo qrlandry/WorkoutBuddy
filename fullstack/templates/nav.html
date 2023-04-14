@@ -8,9 +8,16 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+
+  <style>
+  .navbar-dark .navbar-nav .nav-link:hover {
+    color: white;
+  }
+  </style>
+
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="/"> WorkoutBuddy </a>
   <button
     class="navbar-toggler"
