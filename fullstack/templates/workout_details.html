@@ -1,28 +1,43 @@
-{% extends 'main.html' %}
-
-{% block content %}
-  <h1>{{ workout }}</h1>
+{% extends 'main.html' %} {% block content %}
+<div class="text-center">
+  <h1>{{workout.id}}</h1>
   <form action="{% url 'delete_workout' pk=workout.id %}" method="POST">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Delete</button>
   </form>
   <h2>Exercises</h2>
-  {% if workout_exercises %}
-    <ul>
-      {% for exercise in workout_exercises %}
-        <li>
-          <a href="{% url 'workout_exercise_details' pk=exercise.id %}" >{{ exercise.exercise }} </a>
-          <ul>
-            {% for detail in exercise.workout_exercise_details.all %}
-              <li>
-                {{ detail.sets }} sets of {{ detail.reps }} reps at {{ detail.weight }} lbs
-              </li>
-            {% endfor %}
-          </ul>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No exercises found for this workout.</p>
+</div>
+<div class="row mx-auto">
+  {% if workout_exercises %} {% for exercise in workout_exercises %}
+  <div class="col-sm-4 mb-4">
+    <div class="card">
+      <img
+        class="card-img-top"
+        src="{{exercise.exercise.photo_url}}"
+        alt="Card image cap"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ exercise.exercise.name }}</h5>
+      </div>
+      {% for detail in exercise.workout_exercise_details.all %}
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Sets: {{ detail.sets }}</li>
+        <li class="list-group-item">Reps: {{ detail.reps }}</li>
+        <li class="list-group-item">Weight: {{ detail.weight }}</li>
+      </ul>
+      <div class="card-body">
+        <a
+          href="{% url 'workout_exercise_details' pk=exercise.id %}"
+          class="btn btn-primary"
+          >{{ exercise.exercise }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <p>No exercises added to this workout.</p>
   {% endif %}
+</div>
+
 {% endblock %}
