@@ -1,9 +1,16 @@
 {% extends 'main.html' %}
-
 {% block content %}
-<h1> Workout Logger </h1>
-<div>
-    <a href="{% url 'log_start' %}"> Click here to add workout </a>
+<div class="text-center">
+  <h1>Workout Logger</h1>
+  <div>
+    <button onclick="redirectToLogStart()" class="btn btn-primary my-1">
+      Click here to add workout
+    </button>
+  </div>
 </div>
-
+<script>
+    function redirectToLogStart() {
+      window.location.href = "{% url 'log_start' %}";
+    }
+  </script>
 {% endblock content %}

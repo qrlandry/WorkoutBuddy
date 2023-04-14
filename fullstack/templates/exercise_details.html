@@ -1,17 +1,30 @@
-{% extends 'main.html' %}
-
-{% block content %}
-
-<div>
+{% extends 'main.html' %} {% block content %}
+<div class="text-center">
+    <a href="/exercises/" class="btn btn-secondary">Back</a>
+  <div class="card mx-auto" style="width: 18rem">
+    <img
+      class="card-img-top"
+      src="{{exercise.photo_url}}"
+      alt="Card image cap"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{exercise.name}}</h5>
+      <p class="card-text">{{exercise.description}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Target Area: {{exercise.body_part}}</li>
+      <li class="list-group-item">Equipment: {{exercise.equipment}}</li>
+    </ul>
     {% if request.user == exercise.user %}
-    <a href="{% url 'update_exercise' exercise.id %}"> Edit </a>
-    <a href="{% url 'delete_exercise' exercise.id %}"> Delete </a>
+    <div class="card-body">
+      <a href="{% url 'update_exercise' exercise.id %}" class="btn btn-primary"
+        >Edit</a
+      >
+      <a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-danger"
+        >Delete</a
+      >
+    </div>
     {% endif %}
-    <h1> {{exercise.name}} </h1>
-    <h3> Target Area: {{exercise.body_part}} </h3>
-    <h3> Equipment: {{exercise.equipment}} </h3>
-    <h3> Description: {{exercise.description}} </h3>
-    <img src="{{exercise.photo_url}}">
+  </div>
 </div>
-
 {% endblock content %}

@@ -1,6 +1,6 @@
-{% extends 'main.html' %}
-
+{% extends 'main.html' %} 
 {% block content %}
+<div class="text-center">
   <h1>Add Exercise to Workout</h1>
   <form method="POST">
     {% csrf_token %}
@@ -8,53 +8,65 @@
       <label for="exercise">Exercise:</label>
       <select id="exercise" name="exercise">
         {% for exercise in exercises %}
-          <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+        <option value="{{ exercise.id }}">{{ exercise.name }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="form-group">
       <label for="sets">Sets:</label>
-      <input type="number" id="sets" name="sets" required>
+      <input type="number" id="sets" name="sets" required />
     </div>
     <div class="form-group">
       <label for="reps">Reps:</label>
-      <input type="number" id="reps" name="reps" required>
+      <input type="number" id="reps" name="reps" required />
     </div>
     <div class="form-group">
       <label for="weight">Weight:</label>
-      <input type="number" id="weight" name="weight" required>
+      <input type="number" id="weight" name="weight" required />
     </div>
-    <button type="submit" class="btn btn-primary">Add Exercise</button>
+    <button type="submit" class="btn btn-primary my-1">Add Exercise</button>
   </form>
 
   <form method="POST" action="{% url 'log_end' workout_id=workout.id %}">
     {% csrf_token %}
-    <input type="hidden" name="completion_date" value="{{ date.today }}">
-    <button type="submit">End Workout</button>
+    <input type="hidden" name="completion_date" value="{{ date.today }}" />
+    <button class="btn btn-primary my-1" type="submit">End Workout</button>
   </form>
 
   <h2>Exercises In Workout</h2>
 
-  {% if workout_exercises %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      {% for exercise in workout_exercises %}
-        <div class="col">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">{{ exercise.exercise.name }}</h5>
-              {% for detail in exercise.workout_exercise_details.all %}
-              <p class="card-text">Sets: {{ detail.sets }}</p>
-              <p class="card-text">Reps: {{ detail.reps }}</p>
-              <p class="card-text">Weight: {{ detail.weight }}</p>
-              {% endfor %}
-              </form>
-            </div>
-          </div>
-        </div>    
-      {% endfor %}
+  <div class="row mx-auto">
+    {% if workout_exercises %} {% for exercise in workout_exercises %}
+    <div class="col-sm-4 mb-4">
+      <div class="card">
+        <img
+          class="card-img-top"
+          src="{{exercise.exercise.photo_url}}"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ exercise.exercise.name }}</h5>
+        </div>
+        {% for detail in exercise.workout_exercise_details.all %}
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Sets: {{ detail.sets }}</li>
+          <li class="list-group-item">Reps: {{ detail.reps }}</li>
+          <li class="list-group-item">Weight: {{ detail.weight }}</li>
+        </ul>
+        <div class="card-body">
+          <form method="POST" action="{% url 'add_workout' workout.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="remove_exercise" value="{{ workout_exercise.id }}">
+            <button type="submit" class="btn btn-danger">Remove Exercise</button>
+        </form>
+        {% endfor %}
+        </div>
+      </div>
     </div>
-  {% else %}
+    {% endfor %} {% else %}
     <p>No exercises added to this workout.</p>
-  {% endif %}
+    {% endif %}
+  </div>
+</div>
+  {% endblock %}
 
-{% endblock %}

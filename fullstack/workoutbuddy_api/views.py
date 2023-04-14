@@ -206,6 +206,14 @@ def add_exercise(request, workout_id):
         )
 
         return redirect('add_workout', workout_id=workout_id)
+    
+    elif request.method == 'POST' and 'remove_exercise' in request.POST:
+        workout_exercise_id = request.POST.get('remove_exercise')
+        workout_exercise = WorkoutExercise.objects.get(id=workout_exercise_id)
+        workout_exercise.delete()
+        return redirect('add_workout', workout_id=workout_id)
+    
+        
 
     context = {
         'workout': workout,
@@ -246,4 +254,3 @@ def delete_workout(request, pk):
     if request.method == "POST":
         workout.delete()
         return redirect('sessions')
-
