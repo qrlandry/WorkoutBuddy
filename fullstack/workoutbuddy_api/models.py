@@ -50,8 +50,10 @@ class Workout(models.Model):
         ('Finished', 'Finished'),
         ('Template', 'Template'),
     ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    name = models.CharField(max_length=150, default='string')
     date_completed = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

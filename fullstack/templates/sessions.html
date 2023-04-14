@@ -6,7 +6,7 @@
     {% for workout in workouts %}
     <div class="card col-md-3 m-3" style="width: 18rem">
       <div class="card-body">
-        <h5 class="card-title">Workout</h5>
+        <h5 class="card-title">{{workout.name}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ workout.status }}</h6>
         <p class="card-text">{{ workout.date_completed }}</p>
         <a href="{% url 'workout_details' workout.id %}" class="btn btn-primary"

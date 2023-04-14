@@ -231,8 +231,12 @@ def log(request):
 # log my workouts
 @login_required(login_url='login/')
 def log_start(request):
-    workout = Workout.objects.create(user=request.user)
-    return redirect('add_workout', workout_id=workout.id)
+    if request.method == 'POST':
+        workout_name = request.POST.get('workout_name')
+        if workout_name:
+            workout = Workout.objects.create(user=request.user, name=workout_name)
+            return redirect('add_workout', workout_id=workout.id)
+    return render(request, 'log_start.html')
 
 # finish the workout and redirect to the sessions page
 @login_required(login_url='login/')
