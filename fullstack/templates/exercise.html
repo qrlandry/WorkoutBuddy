@@ -4,11 +4,13 @@
   <div class="text-center">
     <h1>Exercises</h1>
 
+    <div class="d-inline-block">
     <form method="GET" action="{% url 'exercise' %}">
       <input type="text" name="q" placeholder="Search Exercises" />
     </form>
+    </div>
 
-    <div>
+    <div class="d-inline-block">
       <form class="form-inline" method="GET" action="{% url 'exercise' %}">
         <label class="my-1 mr-2" for="body_part">Filter by Body Part:</label>
         <select
@@ -30,7 +32,7 @@
       </form>
     </div>
 
-    <div>
+    <div class="d-inline-block">
       <form class="form-inline">
         <label class="my-1 mr-2" for="equipment">Filter by Equipment:</label>
         <select

@@ -1,31 +1,34 @@
 {% extends 'main.html' %} 
 {% block content %}
+
 <div class="text-center">
   <h1>Add Exercise to Workout</h1>
-  <form method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="exercise">Exercise:</label>
-      <select id="exercise" name="exercise">
-        {% for exercise in exercises %}
-        <option value="{{ exercise.id }}">{{ exercise.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="sets">Sets:</label>
-      <input type="number" id="sets" name="sets" required />
-    </div>
-    <div class="form-group">
-      <label for="reps">Reps:</label>
-      <input type="number" id="reps" name="reps" required />
-    </div>
-    <div class="form-group">
-      <label for="weight">Weight:</label>
-      <input type="number" id="weight" name="weight" required />
-    </div>
-    <button type="submit" class="btn btn-primary my-1">Add Exercise</button>
-  </form>
+  <div class="d-flex justify-content-center">
+    <form method="POST" class="form-inline">
+      {% csrf_token %}
+      <div class="form-group mr-3">
+        <label for="exercise">Exercise:</label>
+        <select id="exercise" name="exercise" class="form-control">
+          {% for exercise in exercises %}
+          <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group mr-3">
+        <label for="sets">Sets:</label>
+        <input type="number" id="sets" name="sets" class="form-control" required />
+      </div>
+      <div class="form-group mr-3">
+        <label for="reps">Reps:</label>
+        <input type="number" id="reps" name="reps" class="form-control" required />
+      </div>
+      <div class="form-group mr-3">
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="weight" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary my-3">Add Exercise</button>
+    </form>
+  </div>
 
   <form method="POST" action="{% url 'log_end' workout_id=workout.id %}">
     {% csrf_token %}
