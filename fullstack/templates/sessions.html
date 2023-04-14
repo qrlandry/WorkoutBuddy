@@ -1,16 +1,23 @@
-{% extends 'main.html' %}
-
-{% block content %}
+{% extends 'main.html' %} {% block content %}
+<div class="text-center">
   <h1>My Workouts</h1>
   {% if workouts %}
-    <ul>
-      {% for workout in workouts %}
-        <li>
-          <a href="{% url 'workout_details' workout.id %}">{{ workout }}</a>
-        </li>
-      {% endfor %}
-    </ul>
+  <div class="row justify-content-center">
+    {% for workout in workouts %}
+    <div class="card col-md-3 m-3" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">Workout</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ workout.status }}</h6>
+        <p class="card-text">{{ workout.date_completed }}</p>
+        <a href="{% url 'workout_details' workout.id %}" class="btn btn-primary"
+          >View Workout</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+  </div>
   {% else %}
-    <p>No workouts found.</p>
+  <p>No workouts found.</p>
   {% endif %}
+</div>
 {% endblock %}
