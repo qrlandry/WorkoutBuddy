@@ -1,13 +1,37 @@
-{% extends 'main.html' %}
-
+{% extends 'main.html' %} 
 {% block content %}
-<h1>Create Exercise</h1>
-<div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-primary my-1">Submit</button>
-    </form>
-</div>
 
+<div class="container">
+    <div class="text-center">
+  <h1>Create Exercise</h1>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group row">
+          {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+        <div class="form-group row">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+          </div>
+        <div class="form-group row">
+            {{ form.body_part.label_tag }}
+            {{ form.body_part }}
+          </div>
+        <div class="form-group row">
+            {{ form.equipment.label_tag }}
+            {{ form.equipment }}
+          </div>
+        <div class="form-group row">
+            {{ form.photo_url.label_tag }}
+            {{ form.photo_url }}
+          </div>
+          <button type="submit" class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div> 
 {% endblock content %}
