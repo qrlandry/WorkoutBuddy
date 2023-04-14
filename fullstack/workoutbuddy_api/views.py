@@ -8,6 +8,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ExerciseForm, UserUpdateForm
 from django.utils import timezone
+from django.http import JsonResponse
 
 # login the user
 def login_page(request):
@@ -258,3 +259,16 @@ def delete_workout(request, pk):
     if request.method == "POST":
         workout.delete()
         return redirect('sessions')
+
+@login_required(login_url='login/')
+def get_sessions(request):
+    workouts = Workout.objects.filter(user=request.user)
+    events = []
+    for workout in workouts:
+        events.append({
+            'title': workout.name,
+            'start': workout.date_completed.isoformat(),
+            'url': f'/workout_details/{workout.id}'
+        })
+    print(events)
+    return JsonResponse(events, safe=False)
