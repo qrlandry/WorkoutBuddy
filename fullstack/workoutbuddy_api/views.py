@@ -201,6 +201,14 @@ def workout_details(request, workout_id):
     }
     return render(request, 'workout_details.html', context)
 
+# delete the exercise from the workout
+@login_required(login_url='login/')
+def remove_exercise(request, workout_id, exercise_id):
+    workout_exercise = WorkoutExercise.objects.get(id=exercise_id)
+    workout_exercise.delete()
+
+    return redirect('add_workout', workout_id=workout_id)
+    
 # add exercise to your workout 
 @login_required(login_url='login/')
 def add_exercise(request, workout_id):
@@ -227,14 +235,6 @@ def add_exercise(request, workout_id):
         )
 
         return redirect('add_workout', workout_id=workout_id)
-    
-    elif request.method == 'POST' and 'remove_exercise' in request.POST:
-        workout_exercise_id = request.POST.get('remove_exercise')
-        workout_exercise = WorkoutExercise.objects.get(id=workout_exercise_id)
-        workout_exercise.delete()
-        return redirect('add_workout', workout_id=workout_id)
-    
-        
 
     context = {
         'workout': workout,
@@ -273,6 +273,7 @@ def log_end(request, workout_id):
     }
     return render(request, 'log_end.html', context)
 
+# remove a workout from a session
 @login_required(login_url='login/')
 def delete_workout(request, pk):
     workout = Workout.objects.get(id=pk)
@@ -280,6 +281,7 @@ def delete_workout(request, pk):
         workout.delete()
         return redirect('sessions')
 
+# retreive the sessions to populate the calendar
 @login_required(login_url='login/')
 def get_sessions(request):
     workouts = Workout.objects.filter(user=request.user)
@@ -293,6 +295,7 @@ def get_sessions(request):
     print(events)
     return JsonResponse(events, safe=False)
 
+# weight model request
 @login_required(login_url='login/')
 def add_update_current_weight(request):
     try:
@@ -309,18 +312,9 @@ def add_update_current_weight(request):
     else:
         form = CurrentWeightForm(instance=weight)
     
-    # current_weight = weight.current_weight
-    # goal_weight = weight.goal_weight
-
-    # if current_weight and goal_weight:
-    #     progress = round((current_weight - goal_weight) / (current_weight - weight.start_weight) * 100)
-    # else:
-    #     progress = 0
-    
     context = {
         'form': form,
         'title': 'Add/Update Current Weight',
-        # 'progress': progress,
     }
 
     return render(request, 'add_update_current_weight.html', context)

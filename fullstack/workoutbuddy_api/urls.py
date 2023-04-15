@@ -20,6 +20,7 @@ urlpatterns = [
     path('log/', views.log, name='log'),
     path('log_start/', views.log_start, name='log_start'),
     path('add_workout_exercises/<int:workout_id>/', views.add_exercise, name='add_workout'),
+    path('remove_exercise/<int:workout_id>/<int:exercise_id>/', views.remove_exercise, name='remove_exercise'),
     path('log_end/<int:workout_id>/', views.log_end, name='log_end'),
     path('edit_profile/', views.edit_profile, name='edit_user_profile'),
     path('profile/', views.profile, name='user_profile'),

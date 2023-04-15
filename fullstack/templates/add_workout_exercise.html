@@ -57,10 +57,10 @@
           <li class="list-group-item">Weight: {{ detail.weight }}</li>
         </ul>
         <div class="card-body">
-          <form method="POST" action="{% url 'add_workout' workout.id %}">
+          <form method="POST" action="{% url 'remove_exercise' workout.id exercise.id %}">
             {% csrf_token %}
-            <input type="hidden" name="remove_exercise" value="{{ workout_exercise.id }}">
-            <button type="submit" class="btn btn-danger">Remove Exercise</button>
+            <input type="hidden" name="workout_exercise_id" value="{{ exercise.id }}">
+            <button type="submit" class="btn btn-danger" name="remove_exercise">Remove Exercise</button>
         </form>
         {% endfor %}
         </div>

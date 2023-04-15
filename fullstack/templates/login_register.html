@@ -1,63 +1,73 @@
-{% extends 'main.html' %} 
+{% extends 'main.html' %} {% block content %} {% if page == 'login' %}
+<div class="text-center">
+  <div class="container">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="form-group">
+        <label> Username </label>
+        <input
+          class="form-control"
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <small class="form-text text-muted"
+          >We'll never share your information with anyone else.</small
+        >
+      </div>
+      <div class="form-group">
+        <label> Password: </label>
+        <input
+          class="form-control"
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+      </div>
+      <button class="btn btn-primary" type="submit">Login</button>
+    </form>
 
-{% block content %}
+    <p class="text-center mt-3">
+      Haven't signed up yet? <a href="{% url 'register' %}"> Sign up here</a>
+    </p>
+  </div>
 
-{% if page == 'login' %}
-<div class="container">
-  <form method="POST" action="">
-    {% csrf_token %}
-    <div class="form-group">
-      <label> Username </label>
-      <input class="form-control" type="text" name="username" placeholder="Username" />
-      <small class="form-text text-muted">We'll never share your information with anyone else.</small>
-    </div>
-    <div class="form-group">
-      <label> Password: </label>
-      <input class="form-control" type="password" name="password" placeholder="Password" />
-    </div>
-    <button class="btn btn-primary" type="submit">Login</button>
-  </form>
+  {% else %}
 
-  <p class="text-center mt-3">Haven't signed up yet? <a href="{% url 'register' %}"> Sign up here</a></p>
-</div>
+  <div class="container">
+    <form method="POST" action="{% url 'register' %}" class="form-signin">
+      {% csrf_token %}
+      <h2 class="form-signin-heading">Registration</h2>
 
-{% else %}
-
-<div class="container">
-  <form method="POST" action="{% url 'register' %}" class="form-signin">
-    {% csrf_token %}
-    <h2 class="form-signin-heading">Registration</h2>
-
-    {% if form.errors %}
+      {% if form.errors %}
       <p class="alert alert-danger">Please correct the errors below.</p>
-    {% endif %}
+      {% endif %} {% if messages %} {% for message in messages %}
+      <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+      {% endfor %} {% endif %}
 
-    {% if messages %}
-      {% for message in messages %}
-        <p class="alert alert-{{ message.tags }}">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+      </div>
 
-    <div class="form-group">
-      <label for="{{ form.username.id_for_label }}">Username:</label>
-      {{ form.username }}
-    </div>
+      <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Password:</label>
+        {{ form.password1 }}
+      </div>
 
-    <div class="form-group">
-      <label for="{{ form.password1.id_for_label }}">Password:</label>
-      {{ form.password1 }}
-    </div>
+      <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+        {{ form.password2 }}
+      </div>
 
-    <div class="form-group">
-      <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
-      {{ form.password2 }}
-    </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Register
+      </button>
+    </form>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-  </form>
-
-  <p class="text-center mt-3">Already signed up? <a href="{% url 'login' %}">Login here</a></p>
+    <p class="text-center mt-3">
+      Already signed up? <a href="{% url 'login' %}">Login here</a>
+    </p>
+  </div>
 </div>
-{% endif %}
-
-{% endblock content %}
+{% endif %} {% endblock content %}
