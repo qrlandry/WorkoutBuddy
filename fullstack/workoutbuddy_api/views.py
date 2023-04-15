@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Exercise, Workout, WorkoutExercise, WorkoutExerciseDetail
+from .models import Exercise, Workout, WorkoutExercise, WorkoutExerciseDetail, Weight
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
-from .forms import ExerciseForm, UserUpdateForm
+from .forms import ExerciseForm, UserUpdateForm, CurrentWeightForm
 from django.utils import timezone
 from django.http import JsonResponse
 
@@ -157,7 +157,27 @@ def edit_profile(request):
 # render the profile
 @login_required(login_url='login/')
 def profile(request):
-    return render(request, 'profile.html')
+    weight = Weight.objects.filter(user=request.user).last()
+
+    if weight:
+        start_weight = weight.start_weight
+        current_weight = weight.current_weight
+        goal_weight = weight.goal_weight
+        progress = int(((current_weight - start_weight) / (goal_weight - start_weight)) * 100)
+
+    else:
+        start_weight = None
+        current_weight = None
+        goal_weight = None
+        progress = None
+
+    context = {
+        'current_weight': current_weight,
+        'goal_weight': goal_weight,
+        'start_weight': start_weight,
+        'progress': progress,
+    }
+    return render(request, 'profile.html', context)
 
 # render past logged workouts
 @login_required(login_url='login/')
@@ -272,3 +292,35 @@ def get_sessions(request):
         })
     print(events)
     return JsonResponse(events, safe=False)
+
+@login_required(login_url='login/')
+def add_update_current_weight(request):
+    try:
+        weight = Weight.objects.get(user=request.user)
+    except Weight.DoesNotExist:
+        weight = Weight(user=request.user, current_weight=0, goal_weight=0)
+
+    if request.method == 'POST':
+        form = CurrentWeightForm(request.POST, instance=weight)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your weight has been updated.')
+            return redirect('/profile/')
+    else:
+        form = CurrentWeightForm(instance=weight)
+    
+    # current_weight = weight.current_weight
+    # goal_weight = weight.goal_weight
+
+    # if current_weight and goal_weight:
+    #     progress = round((current_weight - goal_weight) / (current_weight - weight.start_weight) * 100)
+    # else:
+    #     progress = 0
+    
+    context = {
+        'form': form,
+        'title': 'Add/Update Current Weight',
+        # 'progress': progress,
+    }
+
+    return render(request, 'add_update_current_weight.html', context)

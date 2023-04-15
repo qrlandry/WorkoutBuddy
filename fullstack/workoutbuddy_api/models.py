@@ -78,3 +78,13 @@ class WorkoutExerciseDetail(models.Model):
     def __str__(self):
         return f"WorkoutExerciseDetail(workout_exercise={self.workout_exercise.exercise.name}, " \
                f"sets={self.sets}, reps={self.reps}, weight={self.weight})"
+
+class Weight(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    current_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    start_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    goal_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    date = models.DateField(auto_now_add=True)
+
+    def __int__(self):
+        return self.current_weight

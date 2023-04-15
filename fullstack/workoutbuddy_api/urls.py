@@ -23,5 +23,6 @@ urlpatterns = [
     path('log_end/<int:workout_id>/', views.log_end, name='log_end'),
     path('edit_profile/', views.edit_profile, name='edit_user_profile'),
     path('profile/', views.profile, name='user_profile'),
-    path('get_sessions/', views.get_sessions, name='get_sessions')
+    path('get_sessions/', views.get_sessions, name='get_sessions'),
+    path('add_update_current_weight/', views.add_update_current_weight, name='add_update_current_weight')
 ]
