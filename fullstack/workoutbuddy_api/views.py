@@ -68,12 +68,14 @@ def home(request):
 @login_required(login_url='login/')
 def exercise(request):
 
+    # get q if found move on if not return ''
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     body_part = request.GET.get('body_part') if request.GET.get('body_part') != None else ''
     equipment = request.GET.get('equipment') if request.GET.get('equipment') != None else ''
 
     exercises = Exercise.objects.all()
 
+    # if q is found filter exercises by name using icontains
     if q:
         exercises = exercises.filter(name__icontains=q)
 
@@ -86,14 +88,14 @@ def exercise(request):
     context = { 'exercises': exercises }
     return render(request, 'exercise.html', context)
 
-# exercise details page
+# render the exercise details page
 @login_required(login_url='login/')
 def exercise_details(request, pk):
     exercise = Exercise.objects.get(id=pk)
     context = {'exercise': exercise}
     return render(request, 'exercise_details.html', context)
 
-# view exercise details page from workout sessions
+# render the workout exercises
 @login_required(login_url='login/')
 def workout_exercise_details(request, pk):
     workout_exercise = WorkoutExercise.objects.get(id=pk)
@@ -101,7 +103,7 @@ def workout_exercise_details(request, pk):
     context = {'exercise': exercise}
     return render(request, 'exercise_details.html', context)
 
-# exercise create method
+# create exercise if form is valid
 @login_required(login_url='login/')
 def create_exercise(request):
     form = ExerciseForm()
@@ -116,7 +118,7 @@ def create_exercise(request):
     context = {'form': form}
     return render(request, 'create_exercise.html', context)
 
-# update the exercise
+# update the exercise takes in exercise pk
 @login_required(login_url='login/')
 def update_exercise(request, pk):
     exercise = Exercise.objects.get(id=pk)
@@ -209,7 +211,8 @@ def remove_exercise(request, workout_id, exercise_id):
 
     return redirect('add_workout', workout_id=workout_id)
     
-# add exercise to your workout 
+# add exercise to your workout
+# creates new workoutexercise and details objects with the exercise id
 @login_required(login_url='login/')
 def add_exercise(request, workout_id):
     workout = Workout.objects.get(id=workout_id)
@@ -296,6 +299,9 @@ def get_sessions(request):
     return JsonResponse(events, safe=False)
 
 # weight model request
+# checks if it is post or get req
+# if post it processes form data and updates weight object
+# if get it renders the form with prepopulated data
 @login_required(login_url='login/')
 def add_update_current_weight(request):
     try:
