@@ -17,7 +17,7 @@ WorkoutBuddy is a full-stack application built using `Django` featuring user aut
 - Users can update their account information and weight
 - Users can add or delete their exercises
 - Users can log and view their workouts
-- Users can see their weight loss or weight gain displayed on a graph
+- Users can see their weight loss or weight gain progress
 
 #### Planning and Design
 
@@ -27,10 +27,10 @@ WorkoutBuddy is a full-stack application built using `Django` featuring user aut
 
 #### Frontend
 
-- Django/HTML/CSS
+- Django/HTML/BootStrap version 5.13/CSS
 
 #### Backend
 
-- Django and DjangoRestFramework
+- Django/DjangoRestFramework/Django Auth
 - PostgresSQL
 - Cookies
