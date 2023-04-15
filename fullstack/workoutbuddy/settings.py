@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'workoutbuddy_api'
+    'workoutbuddy_api',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

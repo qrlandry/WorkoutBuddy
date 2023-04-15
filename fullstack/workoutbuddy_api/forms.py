@@ -16,3 +16,4 @@ class CurrentWeightForm(ModelForm):
     class Meta:
         model = Weight
         fields = ['start_weight', 'current_weight', 'goal_weight']
+
