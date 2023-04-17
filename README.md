@@ -27,7 +27,7 @@ WorkoutBuddy is a full-stack application built using `Django` featuring user aut
 
 #### Frontend
 
-- DjangoViews/HTML/BootStrap version 5.13/CSS
+- PythonViews/HTML/BootStrap version 5.13/CSS
 
 #### Backend
 
