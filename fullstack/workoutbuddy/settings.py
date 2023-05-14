@@ -26,9 +26,6 @@ SECRET_KEY = 'django-insecure-#++0zwyf0top94)xowf1k2a5i205rjwiyd**9&r2ndkzv*=6m0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,9 +83,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000"
-]
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 WSGI_APPLICATION = 'workoutbuddy.wsgi.application'
 
